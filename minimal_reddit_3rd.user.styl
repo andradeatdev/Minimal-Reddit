@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Minimal Reddit 3rd
 @namespace      https://github.com/zenstorage/minimal-reddit
-@version        6.3.2
+@version        6.3.3
 @description    Wide posts and remove bloat from homepage
 @homepageURL    https://github.com/zenstorage/minimal-reddit
 @supportURL     https://github.com/zenstorage/minimal-reddit/issues
@@ -758,12 +758,15 @@ Image effets
 			}
 		}
 		if segmentBody {
-			shreddit-post > [slot="text-body"] {
+			shreddit-post > [view-context="SubredditFeed"], shreddit-post > [view-context="CommentsPage"] > [slot="text-body"] {
 				background-color: var(--segment-comments-color) i;
   				padding: 6px 10px i;
   				border-radius: 1rem i;
 				margin-bottom: 4px i;
 			}
+            shreddit-post > [view-context="CommentsPage"] > [slot="text-body"] > .mb-xs {
+                margin-bottom: 0 i;
+            }
 		}
 		if breakLinePost {
 			.feed-card-text-preview {
