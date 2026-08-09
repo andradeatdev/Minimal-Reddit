@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Minimal Reddit 3rd
 @namespace      https://github.com/zenstorage/minimal-reddit
-@version        6.3.0
+@version        6.3.2
 @description    Wide posts and remove bloat from homepage
 @homepageURL    https://github.com/zenstorage/minimal-reddit
 @supportURL     https://github.com/zenstorage/minimal-reddit/issues
@@ -56,16 +56,18 @@ Dropdown navbar
 ------------
 Left sidebar
 ------------
-@var checkbox    enableLeftSidebar       '● Customize left sidebar'        1
-@var select      leftSidebarStyle        '⠀⠀⚬ Style'                       ['Default*', 'Collapse', 'Minimize', 'MinimizeWidth', 'Hide', 'Remove']
-@var checkbox    leftSidebarCollapseOpen '⠀⠀⚬ Collapse openened default'   0
-@var number      widthLeftSidebar        '⠀⠀⚬ Width'                       [272, 0, 544, 1, 'px']
-@var checkbox    topSectionLeftSidebar   '⠀⠀⚬ Remove top section'          0
-@var checkbox    modSectionLeftSidebar   '⠀⠀⚬ Remove mod section'          0
-@var checkbox    feedSectionLeftSidebar  '⠀⠀⚬ Remove feed section'         0
-@var checkbox    recentSectionLeftSidebar'⠀⠀⚬ Remove recent section'       0
-@var checkbox    comSectionLeftSidebar   '⠀⠀⚬ Remove communities section'  0
-@var checkbox    othersSectionLeftSidebar'⠀⠀⚬ Remove others section'       1
+@var checkbox    enableLeftSidebar           '● Customize left sidebar'        1
+@var select      leftSidebarStyle            '⠀⠀⚬ Style'                       ['Default*', 'Collapse', 'Minimize', 'MinimizeWidth', 'Hide', 'Remove']
+@var checkbox    leftSidebarCollapseOpen     '⠀⠀⚬ Collapse openened default'   0
+@var number      widthLeftSidebar            '⠀⠀⚬ Width'                       [272, 0, 544, 1, 'px']
+@var checkbox    topSectionLeftSidebar       '⠀⠀⚬ Remove top section'          0
+@var checkbox    gamesSectionLeftSidebar     '⠀⠀⚬ Remove games section'        0
+@var checkbox    proSectionLeftSidebar       '⠀⠀⚬ Remove pro section'          0
+@var checkbox    modSectionLeftSidebar       '⠀⠀⚬ Remove mod section'          0
+@var checkbox    feedSectionLeftSidebar      '⠀⠀⚬ Remove feed section'         0
+@var checkbox    recentSectionLeftSidebar    '⠀⠀⚬ Remove recent section'       0
+@var checkbox    comSectionLeftSidebar       '⠀⠀⚬ Remove communities section'  0
+@var checkbox    resourcesSectionLeftSidebar '⠀⠀⚬ Remove resources section'    1
 
 
 ------------
@@ -507,6 +509,16 @@ Image effets
 				none();
 			}
 		}
+        if gamesSectionLeftSidebar {
+            reddit-sidebar-nav faceplate-tracker[noun="games_drawer"], reddit-sidebar-nav faceplate-tracker[noun="games_drawer"] + hr {
+                none();
+            }
+        }
+        if proSectionLeftSidebar {
+            reddit-sidebar-nav faceplate-expandable-section-helper:has(#reddit-pro-left-nav), reddit-sidebar-nav faceplate-expandable-section-helper:has(#reddit-pro-left-nav) + hr {
+                none();
+            }
+        }    
 		if modSectionLeftSidebar {
 			faceplate-expandable-section-helper:has(#moderation_section), faceplate-expandable-section-helper:has(#moderation_section) + hr {
 				none();
@@ -518,17 +530,17 @@ Image effets
 			}
 		}
 		if recentSectionLeftSidebar {
-			reddit-recent-pages {
+			reddit-recent-pages, #recent-communities-section {
 				none();
 			}
 		}
 		if comSectionLeftSidebar {
-			faceplate-expandable-section-helper:has(#communities_section), faceplate-expandable-section-helper:has(#communities_section) + hr {
+			faceplate-expandable-section-helper:has(#communities_section), faceplate-expandable-section-helper:has(#communities_section) + faceplate-loader + faceplate-partial + hr {
 				none();
 			}
 		}
-		if othersSectionLeftSidebar {
-			reddit-sidebar-nav > nav > :is(nav, div:last-child) {
+		if resourcesSectionLeftSidebar {
+			reddit-sidebar-nav > nav > nav:has([noun="resources_menu"]) {
 				none();
 			}
 		}
@@ -649,11 +661,11 @@ Image effets
 			}
 			.main-container {
 				justify-content: center i;
-			}
-			@media (min-width: 960px) {
-				.main-container {
-					grid-template-columns: minmax(0, 100%) minmax(0, 316px) i;
-				}	 
+                max-width: 100% i;
+                
+                &:has(> #right-sidebar-container) {
+                    grid-template-columns: 1fr auto i;
+                }
 			}
 			.wide-posts, main.main {
 				/* 100% - right sidebar - gap */
