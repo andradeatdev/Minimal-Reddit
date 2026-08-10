@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Minimal Reddit 3rd
 @namespace      https://github.com/zenstorage/minimal-reddit
-@version        6.3.5
+@version        6.3.6
 @description    Wide posts and remove bloat from homepage
 @homepageURL    https://github.com/andradeatdev/minimal-reddit
 @supportURL     https://github.com/andradeatdev/minimal-reddit/issues
@@ -697,36 +697,35 @@ Image effets
 		if countPosts!='None' {
 			shreddit-feed {
 			    counter-reset: post-count i;
-			
-			    & > article {
-			        counter-increment: post-count i;
-			        position: relative i;
-			
-			        &::before {
-			            content: counter(post-count) i;
-			            position: absolute i;
-			            top: countPosts=='Left-Top' ? 8px : countPosts=='Left-Middle' ? calc(50% - var(--count-posts-size)) : countPosts=='Left-Bottom' ? calc(100% - var(--count-posts-size) - 8px) : '' i;
-						right: calc(100% + 8px) i;
-						if countSidePosts=='Inside' {
-							right: unset i;
-							left: 0 i;
-						}
-			            background-color: var(--color-secondary-background) i;
-			            width: var(--count-posts-size) i;
-			            height: var(--count-posts-size) i;
-			            border-radius: .3rem i;
-			            display: flex i;
-			            justify-content: center i;
-			            align-items: center i;
-			        }
-					if countSidePosts=='Inside' {
-						& > shreddit-post {
-							margin-left: calc(var(--count-posts-size) +  8px) i;
-						}
-					}
-			    }
 			}
-			
+            shreddit-feed article[data-post-id], shreddit-feed .virtualized-placeholder:not([style*="height: 1px;"],[style*="height: 0px;"]) {
+                counter-increment: post-count i;
+                position: relative i;
+
+                if countSidePosts=='Inside' {
+                    & > shreddit-post {
+                        margin-left: calc(var(--count-posts-size) +  8px) i;
+                    }
+                }
+            }
+            shreddit-feed article[data-post-id]::before {
+                content: counter(post-count) i;
+                position: absolute i;
+                top: countPosts=='Left-Top' ? 8px : countPosts=='Left-Middle' ? calc(50% - var(--count-posts-size)) : countPosts=='Left-Bottom' ? calc(100% - var(--count-posts-size) - 8px) : '' i;
+                right: calc(100% + 8px) i;
+                if countSidePosts=='Inside' {
+                    right: unset i;
+                    left: 0 i;
+                }
+                background-color: var(--color-secondary-background) i;
+                width: var(--count-posts-size) i;
+                height: var(--count-posts-size) i;
+                border-radius: .3rem i;
+                display: flex i;
+                justify-content: center i;
+                align-items: center i;
+            }
+            	
 		}
 		if longTimePosts!='None' {
 			invert = longTimeInvertPosts;
